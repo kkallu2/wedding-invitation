@@ -109,6 +109,11 @@
             text-align: center;
             padding: 20px;
             z-index: 10;
+            pointer-events: none;
+        }
+
+        .scene.active {
+            pointer-events: auto;
         }
 
         /* Golden particles */
@@ -118,6 +123,7 @@
             height: 100%;
             overflow: hidden;
             z-index: 3;
+            pointer-events: none;
         }
 
         .particle {
@@ -141,7 +147,8 @@
             position: absolute;
             font-size: 40px;
             animation: floatFlower 8s infinite;
-            z-index: 11;
+            z-index: 4;
+            pointer-events: none;
         }
 
         @keyframes floatFlower {
@@ -165,8 +172,9 @@
             position: absolute;
             font-size: 50px;
             animation: rotateMandala 10s infinite linear;
-            z-index: 11;
+            z-index: 4;
             opacity: 0.5;
+            pointer-events: none;
         }
 
         @keyframes rotateMandala {
@@ -180,7 +188,8 @@
             width: 5px;
             height: 5px;
             border-radius: 50%;
-            z-index: 12;
+            z-index: 5;
+            pointer-events: none;
         }
 
         @keyframes fireworkExplosion {
@@ -220,10 +229,10 @@
             transform: scale(1.1);
         }
 
-        /* Scene 0: Om Symbol & Family Names */
+        /* Scene 0: Om Symbol & Family Names - 5 seconds (0-5s) */
         .scene-0 {
             z-index: 11;
-            animation: fadeIn 1s ease-in forwards, fadeOut 1s ease-out 3.5s forwards;
+            animation: fadeIn 1s ease-in forwards, fadeOut 1s ease-out 5s forwards;
         }
 
         .om-symbol {
@@ -262,10 +271,10 @@
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
-        /* Scene 1: Wedding Announcement */
+        /* Scene 1: Wedding Announcement - 5 seconds (6-11s) */
         .scene-1 {
             z-index: 10;
-            animation: fadeIn 1s ease-in 4.5s forwards, fadeOut 1s ease-out 7.5s forwards;
+            animation: fadeIn 1s ease-in 6s forwards, fadeOut 1s ease-out 11s forwards;
         }
 
         .wedding-title {
@@ -274,7 +283,7 @@
             letter-spacing: clamp(4px, 2vw, 8px);
             text-transform: uppercase;
             font-weight: 600;
-            animation: slideUp 1s ease-out 5s backwards;
+            animation: slideUp 1s ease-out 6.5s backwards;
             margin-bottom: 30px;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
@@ -284,14 +293,14 @@
             color: #FFF;
             font-weight: 300;
             letter-spacing: 2px;
-            animation: slideUp 1s ease-out 5.5s backwards;
+            animation: slideUp 1s ease-out 7s backwards;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
-        /* Scene 2: Couple Names */
+        /* Scene 2: Couple Names - 6 seconds (12-18s) */
         .scene-2 {
             z-index: 9;
-            animation: fadeIn 1s ease-in 8.5s forwards, fadeOut 1s ease-out 12s forwards;
+            animation: fadeIn 1s ease-in 12s forwards, fadeOut 1s ease-out 18s forwards;
         }
 
         .names-container {
@@ -323,11 +332,11 @@
         }
 
         .groom-section {
-            animation: slideRight 1s ease-out 9s backwards;
+            animation: slideRight 1s ease-out 12.5s backwards;
         }
 
         .bride-section {
-            animation: slideLeft 1s ease-out 10s backwards;
+            animation: slideLeft 1s ease-out 14s backwards;
         }
 
         .parent-info {
@@ -339,10 +348,10 @@
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
         }
 
-        /* Scene 3: Venue & Details */
+        /* Scene 3: Venue & Details - Stays on screen (19s onwards) */
         .scene-3 {
-            z-index: 8;
-            animation: fadeIn 1s ease-in 13s forwards;
+            z-index: 100;
+            animation: fadeIn 1s ease-in 19s forwards;
         }
 
         .ceremony-title {
@@ -350,59 +359,169 @@
             color: #FFD700;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 50px;
-            animation: fadeInUp 1s ease-out 13.5s backwards;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 19.5s backwards;
             font-weight: 600;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .details-box {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 215, 0, 0.6);
-            padding: clamp(30px, 5vw, 50px) clamp(40px, 6vw, 70px);
+            padding: clamp(25px, 4vw, 40px) clamp(30px, 5vw, 50px);
             border-radius: 20px;
-            animation: zoomIn 1s ease-out 14s backwards;
+            animation: zoomIn 1s ease-out 20s backwards;
             max-width: 90%;
-            width: 900px;
+            width: 800px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 101;
         }
 
         .detail-item {
-            margin: 30px 0;
+            margin: 20px 0;
             color: #FFF;
         }
 
         .detail-label {
-            font-size: clamp(22px, 4vw, 32px);
+            font-size: clamp(20px, 4vw, 28px);
             color: #FFD700;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
         .detail-value {
-            font-size: clamp(20px, 4vw, 28px);
+            font-size: clamp(18px, 3.5vw, 24px);
             color: #FFF;
             font-weight: 400;
             line-height: 1.8;
         }
 
         .muhurat-time {
-            font-size: clamp(24px, 5vw, 36px);
+            font-size: clamp(22px, 4.5vw, 32px);
             color: #FFD700;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .blessing-note {
-            margin-top: 40px;
-            font-size: clamp(20px, 4vw, 28px);
+            margin-top: 25px;
+            font-size: clamp(18px, 3.5vw, 24px);
             color: #FFD700;
             font-style: italic;
-            animation: fadeInUp 1s ease-out 15s backwards;
+            animation: fadeInUp 1s ease-out 21s backwards;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Video Player Section */
+        .video-player-section {
+            margin-top: 30px;
+            animation: fadeInUp 1s ease-out 21.5s backwards;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 102;
+        }
+
+        .video-play-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8B0000;
+            border: 3px solid #FFD700;
+            padding: 18px 45px;
+            font-size: clamp(18px, 3.5vw, 24px);
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+            z-index: 103;
+        }
+
+        .video-play-button:hover {
+            background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+            transform: scale(1.08);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.8);
+        }
+
+        .video-play-button:active {
+            transform: scale(1.05);
+        }
+
+        .video-play-icon {
+            font-size: clamp(24px, 4vw, 32px);
+        }
+
+        /* Video Modal */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20000;
+            padding: 20px;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(255, 215, 0, 0.4);
+            border: 3px solid rgba(255, 215, 0, 0.6);
+        }
+
+        .modal-video {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 85vh;
+        }
+
+        .video-close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.95);
+            color: #8B0000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 20001;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .video-close-button:hover {
+            background: #FFD700;
+            transform: scale(1.1);
         }
 
         .replay-btn {
@@ -421,7 +540,7 @@
             text-transform: uppercase;
             z-index: 1000;
             transition: all 0.3s ease;
-            animation: fadeIn 1s ease-in 16s forwards;
+            animation: fadeIn 1s ease-in 22s forwards;
             opacity: 0;
             touch-action: manipulation;
         }
@@ -486,11 +605,11 @@
 
             .details-box {
                 max-width: 95%;
-                padding: 25px 30px;
+                padding: 20px 25px;
             }
 
             .detail-item {
-                margin: 20px 0;
+                margin: 15px 0;
             }
 
             .music-control, .replay-btn {
@@ -502,11 +621,27 @@
             .flower, .mandala {
                 font-size: 30px;
             }
+
+            .video-play-button {
+                padding: 15px 35px;
+            }
+
+            .video-modal-content {
+                max-width: 95%;
+            }
+
+            .video-close-button {
+                width: 45px;
+                height: 45px;
+                font-size: 24px;
+                top: 10px;
+                right: 10px;
+            }
         }
 
-        @media (max-height: 600px) and (orientation: landscape) {
+        @media (max-height: 700px) and (orientation: landscape) {
             .details-box {
-                max-height: 80vh;
+                max-height: 70vh;
                 overflow-y: auto;
             }
 
@@ -515,7 +650,11 @@
             }
 
             .detail-item {
-                margin: 15px 0;
+                margin: 12px 0;
+            }
+
+            .video-player-section {
+                margin-top: 20px;
             }
         }
     </style>
@@ -529,15 +668,13 @@
     </div>
 
     <div class="video-container">
-        <!-- Background Video - REPLACE "wedding-video.mp4" with your video filename -->
+        <!-- Background Video -->
         <video class="background-video" id="bgVideo" loop muted playsinline>
-            <source src="wedding-video.mp4" type="video/mp4">
-            <!-- Alternative formats for better browser support -->
-            <source src="wedding-video.webm" type="video/webm">
-            Your browser does not support the video tag.
+            <source src="wedding-background.mp4" type="video/mp4">
+            <source src="wedding-background.webm" type="video/webm">
         </video>
 
-        <!-- Video Overlay for better text visibility -->
+        <!-- Video Overlay -->
         <div class="video-overlay"></div>
 
         <!-- Background Music -->
@@ -592,7 +729,7 @@
             </div>
         </div>
 
-        <!-- Scene 3: Venue & Details -->
+        <!-- Scene 3: Venue & Details with Video Player -->
         <div class="scene scene-3">
             <div class="ceremony-title">Wedding Ceremony</div>
             <div class="details-box">
@@ -613,10 +750,31 @@
                 <div class="blessing-note">
                     🙏 Your presence & blessings are requested 🙏
                 </div>
+                
+                <!-- Video Play Button -->
+                <div class="video-player-section">
+                    <button class="video-play-button" id="videoPlayBtn">
+                        <span class="video-play-icon">▶️</span>
+                        <span>Watch Invitation Video</span>
+                    </button>
+                </div>
             </div>
         </div>
 
         <button class="replay-btn" onclick="replayAnimation()">Replay</button>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-close-button" id="videoCloseBtn">✕</button>
+            <!-- Main Wedding Video -->
+            <video class="modal-video" id="modalVideo" controls controlsList="nodownload">
+                <source src="wedding-main.mp4" type="video/mp4">
+                <source src="wedding-main.webm" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
 
     <script>
@@ -624,14 +782,16 @@
         const bgMusic = document.getElementById('bgMusic');
         const bgVideo = document.getElementById('bgVideo');
         const musicBtn = document.getElementById('musicBtn');
+        const videoModal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const videoPlayBtn = document.getElementById('videoPlayBtn');
+        const videoCloseBtn = document.getElementById('videoCloseBtn');
 
         function startExperience() {
             document.getElementById('clickOverlay').classList.add('hidden');
             
-            // Start background video
-            bgVideo.play().catch(err => console.log('Video play failed:', err));
+            bgVideo.play().catch(err => console.log('Background video play failed:', err));
             
-            // Start music
             bgMusic.volume = 0.4;
             const playPromise = bgMusic.play();
             if (playPromise !== undefined) {
@@ -643,6 +803,11 @@
                     musicBtn.textContent = '🔇';
                 });
             }
+
+            // Enable scene 3 pointer events after animation
+            setTimeout(() => {
+                document.querySelector('.scene-3').classList.add('active');
+            }, 19000);
         }
 
         function toggleMusic() {
@@ -657,6 +822,56 @@
                 }).catch(err => console.log('Play failed'));
             }
         }
+
+        function openVideoModal() {
+            console.log('Opening video modal...');
+            videoModal.classList.add('active');
+            modalVideo.play().catch(err => {
+                console.error('Video play failed:', err);
+                alert('Video failed to play. Please check if wedding-main.mp4 is uploaded correctly.');
+            });
+            if (musicPlaying) {
+                bgMusic.pause();
+            }
+        }
+
+        function closeVideoModal() {
+            console.log('Closing video modal...');
+            videoModal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+            if (musicPlaying) {
+                bgMusic.play();
+            }
+        }
+
+        // Event listeners for video button
+        videoPlayBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Video button clicked!');
+            openVideoModal();
+        });
+
+        videoCloseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeVideoModal();
+        });
+
+        // Close modal when clicking outside video
+        videoModal.addEventListener('click', function(e) {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                closeVideoModal();
+            }
+        });
 
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -726,7 +941,7 @@
         }
 
         function launchFireworks() {
-            const timings = [9000, 9500, 10000, 13500, 14000, 14500, 15000, 15500];
+            const timings = [12500, 13000, 14000, 14500, 19500, 20000, 20500, 21000, 21500];
             timings.forEach(time => {
                 setTimeout(() => {
                     createFirework(
