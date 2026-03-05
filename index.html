@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation - Karthik & Alekhya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            background: #000;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Click to Start Overlay */
+        .click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 50%, #DC143C 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        .click-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .click-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .click-text {
+            font-size: 28px;
+            color: #FFD700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 50%, #DC143C 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background Video */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.4;
+        }
+
+        /* Video Overlay for better text visibility */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.7) 0%, rgba(178, 34, 34, 0.7) 50%, rgba(220, 20, 60, 0.6) 100%);
+            z-index: 2;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        /* Golden particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 215, 0, 0.8);
+            border-radius: 50%;
+            animation: float 8s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Animated decorations */
+        .flower {
+            position: absolute;
+            font-size: 40px;
+            animation: floatFlower 8s infinite;
+            z-index: 11;
+        }
+
+        @keyframes floatFlower {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(-180deg);
+                opacity: 0;
+            }
+        }
+
+        .mandala {
+            position: absolute;
+            font-size: 50px;
+            animation: rotateMandala 10s infinite linear;
+            z-index: 11;
+            opacity: 0.5;
+        }
+
+        @keyframes rotateMandala {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            z-index: 12;
+        }
+
+        @keyframes fireworkExplosion {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #8B0000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .music-control:hover {
+            background: #FFD700;
+            transform: scale(1.1);
+        }
+
+        /* Scene 0: Om Symbol & Family Names */
+        .scene-0 {
+            z-index: 11;
+            animation: fadeIn 1s ease-in forwards, fadeOut 1s ease-out 3.5s forwards;
+        }
+
+        .om-symbol {
+            font-size: clamp(80px, 15vw, 120px);
+            color: #FFD700;
+            margin-bottom: 40px;
+            animation: glowPulse 2s infinite;
+            text-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { 
+                text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
+            }
+            50% { 
+                text-shadow: 0 0 40px #FFD700, 0 0 80px #FFD700;
+            }
+        }
+
+        .family-title {
+            font-size: clamp(32px, 6vw, 48px);
+            color: #FFD700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            animation: slideUp 1s ease-out 0.5s backwards;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .family-subtitle {
+            font-size: clamp(24px, 5vw, 36px);
+            color: #FFF;
+            font-weight: 400;
+            animation: slideUp 1s ease-out 1s backwards;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Scene 1: Wedding Announcement */
+        .scene-1 {
+            z-index: 10;
+            animation: fadeIn 1s ease-in 4.5s forwards, fadeOut 1s ease-out 7.5s forwards;
+        }
+
+        .wedding-title {
+            font-size: clamp(36px, 7vw, 56px);
+            color: #FFD700;
+            letter-spacing: clamp(4px, 2vw, 8px);
+            text-transform: uppercase;
+            font-weight: 600;
+            animation: slideUp 1s ease-out 5s backwards;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .invite-text {
+            font-size: clamp(24px, 5vw, 36px);
+            color: #FFF;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: slideUp 1s ease-out 5.5s backwards;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Scene 2: Couple Names */
+        .scene-2 {
+            z-index: 9;
+            animation: fadeIn 1s ease-in 8.5s forwards, fadeOut 1s ease-out 12s forwards;
+        }
+
+        .names-container {
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .groom-section, .bride-section {
+            margin: 30px 0;
+        }
+
+        .role-label {
+            font-size: clamp(20px, 4vw, 28px);
+            color: #FFD700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 300;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .couple-name {
+            font-size: clamp(40px, 8vw, 72px);
+            color: #FFF;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 10px 0;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .groom-section {
+            animation: slideRight 1s ease-out 9s backwards;
+        }
+
+        .bride-section {
+            animation: slideLeft 1s ease-out 10s backwards;
+        }
+
+        .parent-info {
+            font-size: clamp(18px, 3.5vw, 24px);
+            color: #FFE4B5;
+            margin: 8px 0;
+            font-weight: 300;
+            line-height: 1.6;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Scene 3: Venue & Details */
+        .scene-3 {
+            z-index: 8;
+            animation: fadeIn 1s ease-in 13s forwards;
+        }
+
+        .ceremony-title {
+            font-size: clamp(32px, 6vw, 48px);
+            color: #FFD700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 13.5s backwards;
+            font-weight: 600;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .details-box {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            padding: clamp(30px, 5vw, 50px) clamp(40px, 6vw, 70px);
+            border-radius: 20px;
+            animation: zoomIn 1s ease-out 14s backwards;
+            max-width: 90%;
+            width: 900px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .detail-item {
+            margin: 30px 0;
+            color: #FFF;
+        }
+
+        .detail-label {
+            font-size: clamp(22px, 4vw, 32px);
+            color: #FFD700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: clamp(20px, 4vw, 28px);
+            color: #FFF;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        .muhurat-time {
+            font-size: clamp(24px, 5vw, 36px);
+            color: #FFD700;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .blessing-note {
+            margin-top: 40px;
+            font-size: clamp(20px, 4vw, 28px);
+            color: #FFD700;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 15s backwards;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .replay-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #8B0000;
+            border: none;
+            padding: clamp(14px, 3vw, 18px) clamp(25px, 5vw, 35px);
+            font-size: clamp(16px, 3vw, 18px);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-in 16s forwards;
+            opacity: 0;
+            touch-action: manipulation;
+        }
+
+        .replay-btn:hover,
+        .replay-btn:active {
+            background: #FFD700;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideRight {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideLeft {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .click-icon {
+                font-size: 60px;
+            }
+
+            .click-text {
+                font-size: 20px;
+                padding: 0 20px;
+            }
+
+            .scene {
+                padding: 15px;
+            }
+
+            .details-box {
+                max-width: 95%;
+                padding: 25px 30px;
+            }
+
+            .detail-item {
+                margin: 20px 0;
+            }
+
+            .music-control, .replay-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .flower, .mandala {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .details-box {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .couple-name {
+                margin: 5px 0;
+            }
+
+            .detail-item {
+                margin: 15px 0;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Click to Start -->
+    <div class="click-overlay" id="clickOverlay" onclick="startExperience()">
+        <div class="click-icon">🕉️</div>
+        <div class="click-text">Tap to View Invitation</div>
+    </div>
+
+    <div class="video-container">
+        <!-- Background Video - REPLACE "wedding-video.mp4" with your video filename -->
+        <video class="background-video" id="bgVideo" loop muted playsinline>
+            <source src="wedding-video.mp4" type="video/mp4">
+            <!-- Alternative formats for better browser support -->
+            <source src="wedding-video.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Video Overlay for better text visibility -->
+        <div class="video-overlay"></div>
+
+        <!-- Background Music -->
+        <audio id="bgMusic" loop preload="auto">
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Music control button -->
+        <button class="music-control" id="musicBtn" onclick="toggleMusic()">
+            🔊
+        </button>
+
+        <div class="particles" id="particles"></div>
+        <div id="fireworks-container"></div>
+        <div id="decorations-container"></div>
+
+        <!-- Rotating Mandalas -->
+        <div class="mandala" style="top: 10%; left: 10%;">🪷</div>
+        <div class="mandala" style="top: 10%; right: 10%;">🪷</div>
+        <div class="mandala" style="bottom: 10%; left: 10%;">🪷</div>
+        <div class="mandala" style="bottom: 10%; right: 10%;">🪷</div>
+
+        <!-- Scene 0: Om & Family Title -->
+        <div class="scene scene-0">
+            <div class="om-symbol">🕉️</div>
+            <div class="family-title">Kallu Family</div>
+            <div class="family-subtitle">Cordially Invites You</div>
+        </div>
+
+        <!-- Scene 1: Wedding Announcement -->
+        <div class="scene scene-1">
+            <div class="wedding-title">Wedding Celebration</div>
+            <div class="invite-text">Join us to witness the sacred union</div>
+        </div>
+
+        <!-- Scene 2: Couple Names & Parents -->
+        <div class="scene scene-2">
+            <div class="names-container">
+                <div class="groom-section">
+                    <div class="role-label">Groom</div>
+                    <div class="couple-name">Chi Karthik Reddy</div>
+                    <div class="parent-info">S/o Late Sri Kallu Venkat Reddy</div>
+                    <div class="parent-info">& Smt Rama</div>
+                </div>
+
+                <div class="bride-section">
+                    <div class="role-label">Bride</div>
+                    <div class="couple-name">Chila Sow Alekhya Reddy</div>
+                    <div class="parent-info">D/o Sri Challa Ravinder Reddy</div>
+                    <div class="parent-info">& Smt Vasavi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 3: Venue & Details -->
+        <div class="scene scene-3">
+            <div class="ceremony-title">Wedding Ceremony</div>
+            <div class="details-box">
+                <div class="detail-item">
+                    <div class="detail-label">📅 Date & Time</div>
+                    <div class="detail-value">
+                        Sunday, 8th March 2026
+                        <div class="muhurat-time">Muhurat: 10:58 AM</div>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">📍 Venue</div>
+                    <div class="detail-value">
+                        Shubham Palace<br>
+                        Karmanghat, Hyderabad
+                    </div>
+                </div>
+                <div class="blessing-note">
+                    🙏 Your presence & blessings are requested 🙏
+                </div>
+            </div>
+        </div>
+
+        <button class="replay-btn" onclick="replayAnimation()">Replay</button>
+    </div>
+
+    <script>
+        let musicPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const bgVideo = document.getElementById('bgVideo');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function startExperience() {
+            document.getElementById('clickOverlay').classList.add('hidden');
+            
+            // Start background video
+            bgVideo.play().catch(err => console.log('Video play failed:', err));
+            
+            // Start music
+            bgMusic.volume = 0.4;
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicPlaying = true;
+                    musicBtn.textContent = '🔊';
+                }).catch(error => {
+                    console.log('Music autoplay blocked');
+                    musicBtn.textContent = '🔇';
+                });
+            }
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = '🔇';
+                musicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicBtn.textContent = '🔊';
+                    musicPlaying = true;
+                }).catch(err => console.log('Play failed'));
+            }
+        }
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const isMobile = window.innerWidth < 768;
+            const particleCount = isMobile ? 40 : 60;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function createDecorations() {
+            const container = document.getElementById('decorations-container');
+            const isMobile = window.innerWidth < 768;
+            const decorationCount = isMobile ? 15 : 25;
+
+            const emojis = [
+                { type: 'flower', emoji: '🌸' },
+                { type: 'flower', emoji: '🌺' },
+                { type: 'flower', emoji: '🌹' },
+                { type: 'flower', emoji: '🪷' },
+                { type: 'flower', emoji: '🏵️' },
+                { type: 'flower', emoji: '💐' }
+            ];
+
+            for (let i = 0; i < decorationCount; i++) {
+                const decoration = document.createElement('div');
+                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                decoration.className = randomEmoji.type;
+                decoration.textContent = randomEmoji.emoji;
+                decoration.style.left = Math.random() * 100 + '%';
+                decoration.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(decoration);
+            }
+        }
+
+        function createFirework(x, y) {
+            const colors = ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#FFF'];
+            const isMobile = window.innerWidth < 768;
+            const particles = isMobile ? 20 : 30;
+            const container = document.getElementById('fireworks-container');
+
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                const angle = (Math.PI * 2 * i) / particles;
+                const velocity = (isMobile ? 40 : 50) + Math.random() * (isMobile ? 60 : 100);
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+
+                particle.style.setProperty('--x', tx + 'px');
+                particle.style.setProperty('--y', ty + 'px');
+                particle.style.animation = `fireworkExplosion ${0.8 + Math.random() * 0.4}s ease-out forwards`;
+
+                container.appendChild(particle);
+                setTimeout(() => particle.remove(), 1200);
+            }
+        }
+
+        function launchFireworks() {
+            const timings = [9000, 9500, 10000, 13500, 14000, 14500, 15000, 15500];
+            timings.forEach(time => {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight * 0.6
+                    );
+                }, time);
+            });
+        }
+
+        function replayAnimation() {
+            location.reload();
+        }
+
+        createParticles();
+        createDecorations();
+        launchFireworks();
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
